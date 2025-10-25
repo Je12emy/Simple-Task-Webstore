@@ -39,7 +39,7 @@ Here is an outline of topics that could be covered in any form.
 
 Value Labs has recently established a mandatory certification for engineering staff, this certificate is meant to vet an engineer's base line knowledge of AI tools. In Costa Rica's office, approval rate is low, thus the original inspiration towards beginning this program.
 
-* ACE Certification for Engineers.
+* [ACE Certification Study Guide](Learning%20Material/ACE%20Certification%20Study%20Guide.md).
 	* Showcasing your agent knowledge.
 		* Let's update our web shop.
 			* Agent modes.
