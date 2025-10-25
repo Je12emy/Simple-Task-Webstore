@@ -11,4 +11,7 @@
 	* Office wide impact of AiDE is increased to at least 20% once the program goes live and into production on the first quarter.
 	* AiDE's ACE Certification program success rate increases to at least 70%.
 
-Note: Usage is measured based on Value Lab's internal metrics, which is theorized as the total sum of `actual efforts`. The goal of 20 % is based on VL's last internal goal for the last performance review where this percentage was established company wide.
+> [!NOTE]
+> Usage is measured based on Value Lab's internal metrics, which is theorized as the total sum of `actual efforts`. The goal of 20 % is based on VL's last internal goal for the last performance review where this percentage was established company wide.
+
+
