@@ -1,0 +1,20 @@
+# AiDE Rules for Simple Web Store
+
+## Project Intelligence
+
+- **Framework:** Python Flask
+- **Database:** SQLite
+- **Key Pattern:** Separation of concerns is important. Database logic should be abstracted away from the main application file.
+
+## User Preferences
+
+- The user prefers a clear, well-documented project structure. Memento files are critical and must be kept up-to-date.
+
+## Workflow
+
+1.  **Plan:** Always start by reviewing the Memento files to understand the project state.
+2.  **Act:**
+    - Implement features according to the `activeContext.md`.
+    - Update Memento files after significant changes, especially `activeContext.md` and `progress.md`.
+    - Document new patterns or decisions in `.aiderules`.
+3.  **Verify:** After implementation, provide `curl` commands or other simple ways to verify the functionality.

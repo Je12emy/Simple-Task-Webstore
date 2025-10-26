@@ -26,5 +26,4 @@ When you enable the agent to edit code, you can enable it to create a safe recov
 ## Updating  Web-store with Flask
 
 
-
 ## Bootstrapping our Project with Plan Mode

@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Simple Web Store</title>
+  </head>
+  <body>
+    <h1>Items for Sale</h1>
+    <ul>
+      {% for item in items %}
+      <li>
+        <a href="{{ url_for('item', item_id=item.id) }}">
+          {{ item.name }} - ${{ item.price }}
+        </a>
+      </li>
+      {% endfor %}
+    </ul>
+  </body>
+</html>
