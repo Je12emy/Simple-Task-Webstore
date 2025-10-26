@@ -23,7 +23,11 @@ def item(item_id):
 
 @app.route('/about')
 def about():
-    return render_template('about.html')
+    with open('content/about.md', 'r') as f:
+        content = f.read()
+    import markdown
+    html_content = markdown.markdown(content)
+    return render_template('about.html', content=html_content)
 
 @app.route('/contact')
 def contact():
