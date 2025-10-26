@@ -1,16 +1,20 @@
-from flask import Flask, render_template
-from models import Item
+from flask import Flask, render_template, request
+from models import Item, Category, get_items, get_categories
 from database import db
+import os
 
 app = Flask(__name__)
-app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///store.db'
+app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///' + os.path.join(os.path.abspath(os.path.dirname(__file__)), 'instance/store.db')
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 db.init_app(app)
 
 @app.route('/')
 def index():
-    items = Item.query.all()
-    return render_template('index.html', items=items)
+    category_id = request.args.get('category', type=int)
+    max_price = request.args.get('max_price', type=float)
+    items = get_items(category_id=category_id, max_price=max_price)
+    categories = get_categories()
+    return render_template('index.html', items=items, categories=categories)
 
 @app.route('/item/<int:item_id>')
 def item(item_id):
