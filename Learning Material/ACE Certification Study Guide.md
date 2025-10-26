@@ -23,7 +23,48 @@ As you build up your mastery and familiarity with the Agent, you could visit the
 
 When you enable the agent to edit code, you can enable it to create a safe recovery point in case it commits and error and you would like to easily rollback to a working or safe state. To enable this feature open the `Checkpoints` settings tab and enable the "Enable automatic checkpoints" checkbox.
 
-## Updating  Web-store with Flask
+## Simulating your test
 
+When you start the test, you will be given a list of projects to pick from, there is a ton of variety fitting most use cases. To demonstrate this, we will be updating a simple Python Flask web store by building new features with AiDE. 
+
+> [!Important] 
+> Remember, the goal of this test is to showcase you ability to use AI tools such as AiDE Agent to accelerate your capabilities.
+
+## Developers
+
+We have been asked by the local mom and pop shop to update the website their son has left abandoned ever since he started college. Since we are mostly focused on our daily job, we can't spend too much time on this project, but since the owners have always been part of the community, we have decided to make some improvements to their site over the upcoming weekends.
+
+Since we work at Value Labs, we have access to AiDE Agent, an AI coding agent which could help us get these features done rather quickly. First, clone the repository code.
+
+```shell
+git clone https://github.com/Je12emy/AIDE-Adoption-Program
+```
+
+Navigate to the `Code > WebStore` directory and open the directory with Visual Studio code, if you have not, check the [Development Environment Setup](#Development%20Environment%20Setup) guide.
+
+```shell
+cd Code
+cd Webstore
+code .
+```
+## Basic UI Enhancements
+
+The site seems pretty basic, there are barely any items listed and it lacks the most basic aspects you would expect from a web store like a navigation bar, other pages like "About Us" and a "Contact" form could also help.
+
+Since we are lacking some context, lets use `Plan Mode` to get familiar with the project, the stack and how it is structured.
+
+Open the AiDE Plugin tab in VSCode by clicking on the icon in the primary sidebar or run the command `AiDE Agent: Focus on view` in the command palette.  `Tasks` are a unit of work you define, once you build a prompt, your agent will build a local todo list with the required steps to complete it's work. AiDE has various modes which dictate how it will complete a given tasks and how it will interact with itself and you as the developer.
+
+You can switch between modes using the drop down at the bottom left, click on it an select `Plan`. Plan mode is used as an analysis mode for the agent to scan the code base and document as much context for other modes. These documentation artifacts known as "mementos"will be used by other modes as context or an internal memory, for tracking task progress, results, pending changes and of course, by you the engineer monitoring the whole Software Development Life Cycle (SDLC) .
+
+> Memento: an object that you keep to remember a person, place, or event
+
+> [!Tip]  Takeaway
+> Plan mode will produce documentation which can be used by the agent to complete tasks and the engineer to audit progress.
+
+Your first prompt does not need to be complicated, however, let's be specific with what we want, since this is exactly what we would expect from our project managers as engineers.
+
+> Implement a responsive navigation bar located at the top of the site, it should be displayed on all pages. You should be use it to navigate to the landing page which lists all items and a empty "About Us" page and an empty "Contact" page
+## Quality Assurance Engineers
 
 ## Bootstrapping our Project with Plan Mode
