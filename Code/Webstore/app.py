@@ -1,11 +1,24 @@
-from flask import Flask, render_template, request
+from flask import Flask, render_template, request, flash, redirect, url_for
+from flask_mail import Mail, Message
 from models import Item, Category, get_items, get_categories
 from database import db
 import os
 
 app = Flask(__name__)
+app.config['SECRET_KEY'] = 'your_secret_key'  # Change this to a random secret key
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///' + os.path.join(os.path.abspath(os.path.dirname(__file__)), 'instance/store.db')
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
+
+# Flask-Mail configuration for MailHog
+app.config['MAIL_SERVER'] = 'localhost'
+app.config['MAIL_PORT'] = 1025
+app.config['MAIL_USE_TLS'] = False
+app.config['MAIL_USE_SSL'] = False
+app.config['MAIL_USERNAME'] = None
+app.config['MAIL_PASSWORD'] = None
+app.config['MAIL_DEFAULT_SENDER'] = 'contact@webstore.com'
+
+mail = Mail(app)
 db.init_app(app)
 
 @app.route('/')
@@ -29,8 +42,26 @@ def about():
     html_content = markdown.markdown(content)
     return render_template('about.html', content=html_content)
 
-@app.route('/contact')
+@app.route('/contact', methods=['GET', 'POST'])
 def contact():
+    if request.method == 'POST':
+        first_name = request.form['first_name']
+        last_name = request.form['last_name']
+        email = request.form['email']
+        message_body = request.form['message']
+
+        msg = Message("New Contact Form Submission",
+                      recipients=["your_email@example.com"])  # Replace with your email
+        msg.body = f"""
+        From: {first_name} {last_name} <{email}>
+        
+        {message_body}
+        """
+        mail.send(msg)
+        
+        flash('Your message has been sent successfully!', 'success')
+        return redirect(url_for('contact'))
+        
     return render_template('contact.html')
 if __name__ == '__main__':
     app.run(debug=True)
