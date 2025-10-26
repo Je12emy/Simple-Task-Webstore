@@ -21,5 +21,12 @@ def item(item_id):
     item = Item.query.get_or_404(item_id)
     return render_template('item.html', item=item)
 
+@app.route('/about')
+def about():
+    return render_template('about.html')
+
+@app.route('/contact')
+def contact():
+    return render_template('contact.html')
 if __name__ == '__main__':
     app.run(debug=True)
