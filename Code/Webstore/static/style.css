@@ -219,3 +219,65 @@ a:hover {
   color: #555;
   border-top: 1px solid #e5e5e5;
 }
+
+/* Contact Form Styles */
+.form-group {
+  margin-bottom: 20px;
+}
+
+.form-group label {
+  display: block;
+  margin-bottom: 8px;
+  font-weight: 500;
+  color: #333;
+}
+
+.form-group input,
+.form-group textarea {
+  width: 100%;
+  padding: 12px;
+  border: 1px solid #e5e5e5;
+  border-radius: 8px;
+  font-size: 16px;
+  font-family: inherit;
+  box-sizing: border-box; /* Ensures padding doesn't affect width */
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.form-group input:focus,
+.form-group textarea:focus {
+  outline: none;
+  border-color: #007aff;
+  box-shadow: 0 0 0 3px rgba(0, 122, 255, 0.1);
+}
+
+.btn {
+  display: inline-block;
+  padding: 12px 24px;
+  background-color: #007aff;
+  color: #fff;
+  border: none;
+  border-radius: 8px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+}
+
+.btn:hover {
+  background-color: #005ecb;
+}
+
+/* Flashed Messages */
+.flashes {
+  list-style: none;
+  padding: 0;
+  margin-bottom: 20px;
+}
+
+.flash-success {
+  background-color: #e6f9f0;
+  color: #008a4c;
+  padding: 15px;
+  border-radius: 8px;
+  border: 1px solid #c3e6cb;
+}
