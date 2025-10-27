@@ -1,4 +1,4 @@
-from flask import Flask, render_template, request, flash, redirect, url_for
+from flask import Flask, render_template, request, flash, redirect, url_for, session
 from flask_mail import Mail, Message
 from models import Item, Category, get_items, get_categories, db
 from sqlalchemy import func
@@ -38,12 +38,14 @@ def index():
     categories = get_categories()
     max_item_price = db.session.query(func.max(Item.price)).scalar() or 10000
 
-    return render_template('index.html', items=items, categories=categories, max_item_price=max_item_price)
+    favorites = session.get('favorites', [])
+    return render_template('index.html', items=items, categories=categories, max_item_price=max_item_price, favorites=favorites)
 
 @app.route('/item/<int:item_id>')
 def item(item_id):
     item = Item.query.get_or_404(item_id)
-    return render_template('item.html', item=item)
+    favorites = session.get('favorites', [])
+    return render_template('item.html', item=item, favorites=favorites)
 
 @app.route('/about')
 def about():
@@ -74,5 +76,26 @@ def contact():
         return redirect(url_for('contact'))
         
     return render_template('contact.html')
+@app.route('/favorites/toggle/<int:product_id>', methods=['POST'])
+def toggle_favorite(product_id):
+    favorites = session.get('favorites', [])
+    if product_id in favorites:
+        favorites.remove(product_id)
+        session['favorites'] = favorites
+        flash('Item removed from favorites.', 'success')
+    else:
+        favorites.append(product_id)
+        session['favorites'] = favorites
+        flash('Item added to favorites!', 'success')
+    return redirect(request.referrer or url_for('index'))
+
+@app.route('/favorites')
+def favorites():
+    favorite_ids = session.get('favorites', [])
+    if favorite_ids:
+        favorite_items = Item.query.filter(Item.id.in_(favorite_ids)).all()
+    else:
+        favorite_items = []
+    return render_template('favorites.html', items=favorite_items)
 if __name__ == '__main__':
     app.run(debug=True)

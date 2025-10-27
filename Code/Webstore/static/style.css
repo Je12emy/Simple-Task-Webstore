@@ -379,3 +379,33 @@ a:hover {
 .clear-button:hover {
   background-color: #5a6268;
 }
+
+.favorite-form {
+  display: inline;
+}
+
+.favorite-button {
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-size: 24px;
+  color: #ccc;
+}
+
+.favorite-button .favorited {
+  color: red;
+}
+
+.item-card {
+  position: relative;
+}
+
+.item-info {
+  flex-grow: 1;
+}
+
+.favorite-form {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+}

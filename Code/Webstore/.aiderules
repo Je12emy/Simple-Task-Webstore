@@ -13,6 +13,7 @@
 ## Workflow
 
 1.  **Plan:** Always start by reviewing the Memento files to understand the project state.
+    - Do NOT read the contents of the file named `.env`, if not, make sure to ask for permission
 2.  **Act:**
     - Implement features according to the `activeContext.md`.
     - Update Memento files after significant changes, especially `activeContext.md` and `progress.md`.
