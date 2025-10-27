@@ -33,8 +33,15 @@
     <main>{% block content %}{% endblock %}</main>
 
     <footer class="site-footer">
-      <div class="container">
+      <div class="container footer-container">
         <p>&copy; 2025 Simple Web Store. All rights reserved.</p>
+        <nav class="footer-nav" aria-label="Footer Navigation">
+          <ul class="footer-links">
+            <li><a href="{{ url_for('index') }}">Home</a></li>
+            <li><a href="{{ url_for('about') }}">About Us</a></li>
+            <li><a href="{{ url_for('contact') }}">Contact</a></li>
+          </ul>
+        </nav>
       </div>
     </footer>
 
