@@ -1,6 +1,43 @@
 {% extends "base.html" %} {% block content %}
 <div class="container">
   <h1>Items for Sale</h1>
+<div class="filter-controls">
+    <form method="GET" action="{{ url_for('index') }}">
+      <div class="form-group">
+        <label for="sort_by">Sort by:</label>
+        <select name="sort_by" id="sort_by">
+          <option value="name" {% if request.args.get('sort_by') == 'name' %}selected{% endif %}>Name</option>
+          <option value="price_asc" {% if request.args.get('sort_by') == 'price_asc' %}selected{% endif %}>Price: Low to High</option>
+          <option value="price_desc" {% if request.args.get('sort_by') == 'price_desc' %}selected{% endif %}>Price: High to Low</option>
+        </select>
+      </div>
+
+      <div class="form-group">
+        <label for="category">Category:</label>
+        <select name="category" id="category">
+          <option value="">All</option>
+          {% for cat in categories %}
+          <option value="{{ cat.id }}" {% if request.args.get('category')|int == cat.id %}selected{% endif %}>{{ cat.name }}</option>
+          {% endfor %}
+        </select>
+      </div>
+
+      <div class="form-group">
+        <label for="min_price">Min Price:</label>
+        <input type="range" id="min_price" name="min_price" min="0" max="1000" value="{{ request.args.get('min_price', '0') }}" oninput="this.nextElementSibling.value = this.value">
+        <output>{{ request.args.get('min_price', '0') }}</output>
+      </div>
+
+      <div class="form-group">
+        <label for="max_price">Max Price:</label>
+        <input type="range" id="max_price" name="max_price" min="0" max="{{ max_item_price }}" value="{{ request.args.get('max_price', max_item_price) }}" oninput="this.nextElementSibling.value = this.value">
+        <output>{{ request.args.get('max_price', max_item_price) }}</output>
+      </div>
+
+      <button type="submit">Apply</button>
+<a href="{{ url_for('index') }}" class="clear-button">Clear</a>
+    </form>
+  </div>
   <ul class="item-list">
     {% for item in items %}
     <li class="item-card">

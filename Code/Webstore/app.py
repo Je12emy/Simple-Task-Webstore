@@ -1,7 +1,7 @@
 from flask import Flask, render_template, request, flash, redirect, url_for
 from flask_mail import Mail, Message
-from models import Item, Category, get_items, get_categories
-from database import db
+from models import Item, Category, get_items, get_categories, db
+from sqlalchemy import func
 import os
 
 app = Flask(__name__)
@@ -23,11 +23,22 @@ db.init_app(app)
 
 @app.route('/')
 def index():
+    sort_by = request.args.get('sort_by', 'name')
     category_id = request.args.get('category', type=int)
+    min_price = request.args.get('min_price', type=float)
     max_price = request.args.get('max_price', type=float)
-    items = get_items(category_id=category_id, max_price=max_price)
+
+    items = get_items(
+        sort_by=sort_by,
+        category_id=category_id,
+        min_price=min_price,
+        max_price=max_price
+    )
+    
     categories = get_categories()
-    return render_template('index.html', items=items, categories=categories)
+    max_item_price = db.session.query(func.max(Item.price)).scalar() or 10000
+
+    return render_template('index.html', items=items, categories=categories, max_item_price=max_item_price)
 
 @app.route('/item/<int:item_id>')
 def item(item_id):

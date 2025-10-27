@@ -18,12 +18,23 @@ class Item(db.Model):
     def __repr__(self):
         return f'<Item {self.name}>'
 
-def get_items(category_id=None, max_price=None):
+def get_items(category_id=None, min_price=None, max_price=None, sort_by=None):
     query = Item.query
-    if category_id:
+
+    if category_id is not None and category_id != '':
         query = query.filter(Item.category_id == category_id)
-    if max_price:
+    if min_price is not None:
+        query = query.filter(Item.price >= min_price)
+    if max_price is not None:
         query = query.filter(Item.price <= max_price)
+
+    if sort_by == 'price_asc':
+        query = query.order_by(Item.price.asc())
+    elif sort_by == 'price_desc':
+        query = query.order_by(Item.price.desc())
+    else:
+        query = query.order_by(Item.name.asc())
+        
     return query.all()
 
 def get_categories():
