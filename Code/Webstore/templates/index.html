@@ -70,5 +70,18 @@
     </li>
     {% endfor %}
   </ul>
+    <div class="pagination">
+        {% if prev_cursor %}
+            {% set params = request.args.to_dict() %}
+            {% do params.pop('cursor', None) %}
+            <a href="{{ url_for('index', **params) }}">First</a>
+        {% endif %}
+
+        {% if next_cursor %}
+            {% set params = request.args.to_dict() %}
+            {% do params.update({'cursor': next_cursor}) %}
+            <a href="{{ url_for('index', **params) }}">Next</a>
+        {% endif %}
+    </div>
 </div>
 {% endblock %}

@@ -20,7 +20,7 @@ class Item(db.Model):
     def __repr__(self):
         return f'<Item {self.name}>'
 
-def get_items(category_id=None, min_price=None, max_price=None, sort_by=None):
+def get_items(category_id=None, min_price=None, max_price=None, sort_by=None, cursor=None, per_page=9):
     query = Item.query
 
     if category_id is not None and category_id != '':
@@ -29,15 +29,18 @@ def get_items(category_id=None, min_price=None, max_price=None, sort_by=None):
         query = query.filter(Item.price >= min_price)
     if max_price is not None:
         query = query.filter(Item.price <= max_price)
+    
+    if cursor:
+        query = query.filter(Item.id > cursor)
 
     if sort_by == 'price_asc':
-        query = query.order_by(Item.price.asc())
+        query = query.order_by(Item.price.asc(), Item.id.asc())
     elif sort_by == 'price_desc':
-        query = query.order_by(Item.price.desc())
+        query = query.order_by(Item.price.desc(), Item.id.asc())
     else:
-        query = query.order_by(Item.name.asc())
+        query = query.order_by(Item.name.asc(), Item.id.asc())
         
-    return query.all()
+    return query.limit(per_page).all()
 
 def get_categories():
     return Category.query.all()

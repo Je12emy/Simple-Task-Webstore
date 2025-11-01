@@ -5,6 +5,7 @@ from sqlalchemy import func
 import os
 
 app = Flask(__name__)
+app.jinja_env.add_extension('jinja2.ext.do')
 app.config['SECRET_KEY'] = 'your_secret_key'  # Change this to a random secret key
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///' + os.path.join(os.path.abspath(os.path.dirname(__file__)), 'instance/store.db')
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
@@ -27,19 +28,25 @@ def index():
     category_id = request.args.get('category', type=int)
     min_price = request.args.get('min_price', type=float)
     max_price = request.args.get('max_price', type=float)
-
+    cursor = request.args.get('cursor', type=int)
+    
+    per_page = 9
     items = get_items(
         sort_by=sort_by,
         category_id=category_id,
         min_price=min_price,
-        max_price=max_price
+        max_price=max_price,
+        cursor=cursor,
+        per_page=per_page
     )
+
+    next_cursor = items[-1].id if len(items) == per_page else None
     
     categories = get_categories()
     max_item_price = db.session.query(func.max(Item.price)).scalar() or 10000
 
     favorites = session.get('favorites', [])
-    return render_template('index.html', items=items, categories=categories, max_item_price=max_item_price, favorites=favorites)
+    return render_template('index.html', items=items, categories=categories, max_item_price=max_item_price, favorites=favorites, next_cursor=next_cursor, prev_cursor=cursor)
 
 @app.route('/item/<int:item_id>')
 def item(item_id):
