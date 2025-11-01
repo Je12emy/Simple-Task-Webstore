@@ -12,6 +12,8 @@ class Item(db.Model):
     name = db.Column(db.String(80), unique=True, nullable=False)
     description = db.Column(db.String(200), nullable=False)
     price = db.Column(db.Float, nullable=False)
+    image_data = db.Column(db.LargeBinary, nullable=True)  # Store image data
+    image_mimetype = db.Column(db.String(50), nullable=True) # Store mimetype
     category_id = db.Column(db.Integer, db.ForeignKey('category.id'), nullable=False)
     category = db.relationship('Category', backref=db.backref('items', lazy=True))
 

@@ -42,6 +42,7 @@
     {% for item in items %}
     <li class="item-card">
       <a href="{{ url_for('item', item_id=item.id) }}" class="item-info">
+        <img src="{{ url_for('item_image', item_id=item.id) }}" alt="{{ item.name }}" class="item-image">
         <span class="item-name">{{ item.name }}</span>
         <span class="item-price">${{ item.price }}</span>
       </a>

@@ -46,6 +46,12 @@ def item(item_id):
     item = Item.query.get_or_404(item_id)
     favorites = session.get('favorites', [])
     return render_template('item.html', item=item, favorites=favorites)
+@app.route('/item/<int:item_id>/image')
+def item_image(item_id):
+    item = Item.query.get_or_404(item_id)
+    if item.image_data:
+        return app.response_class(item.image_data, mimetype=item.image_mimetype)
+    return 'No Image', 404
 
 @app.route('/about')
 def about():
