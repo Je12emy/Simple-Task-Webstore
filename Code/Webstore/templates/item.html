@@ -1,26 +1,42 @@
 {% extends "base.html" %} {% block content %}
 <div class="container">
-  <h1 class="item-title">{{ item.name }}</h1>
-  <img
-    src="{{ url_for('item_image', item_id=item.id) }}"
-    alt="{{ item.name }}"
-    class="item-detail-image"
-  />
-  <p class="item-description">{{ item.description }}</p>
-  <p class="item-price-detail">Price: ${{ item.price }}</p>
-  <form
-    action="{{ url_for('toggle_favorite', product_id=item.id) }}"
-    method="post"
-    class="favorite-form"
-  >
-    <button type="submit" class="favorite-button">
-      {% if item.id in favorites %}
-      <span class="favorited">&hearts;</span>
-      {% else %}
-      <span>&hearts;</span>
-      {% endif %}
-    </button>
-  </form>
-  <a href="{{ url_for('index') }}" class="button">Back to Home</a>
+  <div class="item-detail-grid">
+    <div class="detail-image-col">
+      <img
+        src="{{ url_for('item_image', item_id=item.id) }}"
+        alt="{{ item.name }}"
+        class="item-detail-image"
+      />
+    </div>
+
+    <div class="detail-info-col">
+      <h1 class="item-title">{{ item.name }}</h1>
+      <p class="item-description">{{ item.description }}</p>
+      <p class="item-price-detail">Price: ${{ item.price }}</p>
+
+      <div class="detail-actions">
+        <form
+          action="{{ url_for('toggle_favorite', product_id=item.id) }}"
+          method="post"
+          class="favorite-form"
+        >
+          <button
+            type="submit"
+            class="favorite-button"
+            aria-pressed="{% if item.id in favorites %}true{% else %}false{% endif %}"
+            aria-label="Toggle favorite"
+          >
+            {% if item.id in favorites %}
+            <span class="favorited">&hearts;</span>
+            {% else %}
+            <span>&hearts;</span>
+            {% endif %}
+          </button>
+        </form>
+
+        <a href="{{ url_for('index') }}" class="button">Back to Home</a>
+      </div>
+    </div>
+  </div>
 </div>
 {% endblock %}

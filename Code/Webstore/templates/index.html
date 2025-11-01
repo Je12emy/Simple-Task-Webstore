@@ -41,20 +41,32 @@
   <ul class="item-list">
     {% for item in items %}
     <li class="item-card">
-      <a href="{{ url_for('item', item_id=item.id) }}" class="item-info">
+      <a href="{{ url_for('item', item_id=item.id) }}">
         <img src="{{ url_for('item_image', item_id=item.id) }}" alt="{{ item.name }}" class="item-image">
-        <span class="item-name">{{ item.name }}</span>
-        <span class="item-price">${{ item.price }}</span>
       </a>
-      <form action="{{ url_for('toggle_favorite', product_id=item.id) }}" method="post" class="favorite-form">
-        <button type="submit" class="favorite-button">
-          {% if item.id in favorites %}
-          <span class="favorited">&hearts;</span>
-          {% else %}
-          <span>&hearts;</span>
-          {% endif %}
-        </button>
-      </form>
+
+      <div class="card-body">
+        <a href="{{ url_for('item', item_id=item.id) }}" class="item-info">
+          <div class="item-meta">
+            <div>
+              <span class="item-name">{{ item.name }}</span>
+            </div>
+            <div>
+              <span class="item-price">${{ item.price }}</span>
+            </div>
+          </div>
+        </a>
+
+        <form action="{{ url_for('toggle_favorite', product_id=item.id) }}" method="post" class="favorite-form">
+          <button type="submit" class="favorite-button" aria-pressed="{% if item.id in favorites %}true{% else %}false{% endif %}">
+            {% if item.id in favorites %}
+            <span class="favorited">&hearts;</span>
+            {% else %}
+            <span>&hearts;</span>
+            {% endif %}
+          </button>
+        </form>
+      </div>
     </li>
     {% endfor %}
   </ul>
