@@ -656,3 +656,28 @@ a:hover {
   height: auto;
   margin-bottom: 20px;
 }
+
+/* Pagination Styles */
+.pagination {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 20px;
+  gap: 10px;
+}
+
+.pagination a {
+  display: inline-block;
+  padding: 10px 15px;
+  background-color: #007aff;
+  color: #fff;
+  border-radius: 8px;
+  font-weight: 500;
+  text-decoration: none;
+  transition: background-color 0.2s ease;
+}
+
+.pagination a:hover {
+  background-color: #005ecb;
+  text-decoration: none;
+}

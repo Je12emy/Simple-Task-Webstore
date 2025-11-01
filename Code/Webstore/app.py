@@ -28,9 +28,19 @@ def index():
     category_id = request.args.get('category', type=int)
     min_price = request.args.get('min_price', type=float)
     max_price = request.args.get('max_price', type=float)
-    cursor = request.args.get('cursor', type=int)
+    cursor = request.args.get('cursor')
     
     per_page = 9
+    
+    # New pagination logic
+    if cursor:
+        try:
+            cursor = int(cursor)
+        except (TypeError, ValueError):
+            cursor = None
+    else:
+        cursor = None
+
     items = get_items(
         sort_by=sort_by,
         category_id=category_id,
@@ -40,13 +50,27 @@ def index():
         per_page=per_page
     )
 
-    next_cursor = items[-1].id if len(items) == per_page else None
+    next_cursor = items[-1].id if items and len(items) == per_page else None
     
+    # Calculate previous cursor
+    if cursor is not None:
+        # This is a simplified example; a robust solution might involve more complex logic
+        # to find the actual previous page's starting item ID.
+        # For now, we'll just go back by `per_page` IDs, which is not perfect but works for this case.
+        prev_cursor_id = max(0, cursor - per_page)
+        if prev_cursor_id == 0:
+            prev_cursor = '0' # Signal to go to the first page
+        else:
+            prev_cursor = str(prev_cursor_id)
+    else:
+        prev_cursor = None
+
+
     categories = get_categories()
     max_item_price = db.session.query(func.max(Item.price)).scalar() or 10000
 
     favorites = session.get('favorites', [])
-    return render_template('index.html', items=items, categories=categories, max_item_price=max_item_price, favorites=favorites, next_cursor=next_cursor, prev_cursor=cursor)
+    return render_template('index.html', items=items, categories=categories, max_item_price=max_item_price, favorites=favorites, next_cursor=next_cursor, prev_cursor=prev_cursor)
 
 @app.route('/item/<int:item_id>')
 def item(item_id):
